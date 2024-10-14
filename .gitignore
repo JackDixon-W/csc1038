@@ -1,3 +1,4 @@
 # exclude /.vscode
 .vscode/*
+*.html
 
