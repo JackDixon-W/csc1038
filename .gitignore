@@ -1,6 +1,12 @@
-# We exclude everything and only include relevant files
+# Ignore all files without an extension
 *
-/*
+
+# Do not ignore C source files
 !/*.c
+
+# Do not ignore README or .gitignore
 !README.md
 !.gitignore
+
+# Allow directories and their contents to be tracked
+!*/
