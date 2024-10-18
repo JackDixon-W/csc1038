@@ -1,4 +1,11 @@
 # exclude /.vscode
-.vscode/*
-*.html
+#.vscode/*
+#*.html
 
+# New Plan
+# We exclude everything and only include relevant files
+*
+/*
+!/*.c
+!README.md
+!.gitignore
