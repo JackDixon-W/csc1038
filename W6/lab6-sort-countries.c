@@ -89,7 +89,7 @@ void sort_countries(Country *countries, int length)
         // This ensures only the most recent sort is being checked
         sorted = 1;
         // For loop, iterating on i and j at the same time
-        for(int i = length-1; i > 0; i--)
+        for(int i = length-1; i >= 0; i--)
         {
             pOther = &countries[i+1];
             pCurrent = &countries[i];
