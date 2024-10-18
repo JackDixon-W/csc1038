@@ -8,7 +8,19 @@ Welcome to the **CSC1038** repository! This repository contains coursework and a
 
 The files in this repository are organized by weeks to reflect the progression of the course. Each week’s assignment and related files are stored in their respective folders:
 ```
-. ├── W1/ │ ├── assignment1.c ├── W2/ │ ├── assignment2.c ├── W3/ │ ├── assignment3.c ├── W4/ │ ├── assignment4.c ├── W5/ │ ├── assignment5.c └── W6/ ├── assignment6.c
+.
+├── W1/
+│   ├── assignment1.c
+├── W2/
+│   ├── assignment2.c
+├── W3/
+│   ├── assignment3.c
+├── W4/
+│   ├── assignment4.c
+├── W5/
+│   ├── assignment5.c
+└── W6/
+    ├── assignment6.c
 ```
 
 ## Compilation and Execution
