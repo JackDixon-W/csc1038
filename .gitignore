@@ -1,8 +1,8 @@
 # Ignore all files without an extension
-*
+**/*
 
 # Do not ignore C source files
-!/*.c
+!**/*.c
 
 # Do not ignore README or .gitignore
 !README.md
