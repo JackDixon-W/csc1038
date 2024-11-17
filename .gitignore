@@ -10,3 +10,6 @@
 
 # Allow directories and their contents to be tracked
 !*/
+
+# Ignore extra folder
+extra/*
