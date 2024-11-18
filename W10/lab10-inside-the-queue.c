@@ -1,6 +1,9 @@
 /*
 Author: Jack Dixon
-Description: 
+Description: Creates doubly linked list from hardcoded float array.
+Argv[1] gives a position in list. Argv[2] gives a value to insert after this position.
+Finds the pointer to the correct node to insert after. 
+Then this pointer is used to build the new node and link the rest of the list into it.
 Date: 17-11-24
 */
 
@@ -19,46 +22,29 @@ struct Node
 };
 
 // Function Prototypes
-float *grabInput(char *argv[], int length, int pos);
 Node *createNodes(float *floatArray, int length);
 void printDoublyLinkedList(Node *linkedList, int reverse);
-void pushAfterPos(Node *startOfList, int pos, float val);
-int findFloat(Node *startOfList, float val);
+void pushAfterPos(Node *posInLoop, float val);
+Node *findFloat(Node *startOfList, float val);
 
 // Main program
 int main(int argc, char *argv[])
 {
     // This part is just done because all the rest of my code works in pointers
-    float floatArray[11] = {8, 7, 3, 4, 5, 6, 9, 2, 1, 4, 12};
+    float floatArray[10] = {8, 7, 3, 4, 5, 6, 9, 2, 14, 12};
     float *pFloatArray = floatArray;
-    Node *linkedList = createNodes(pFloatArray, 11);
+    Node *linkedList = createNodes(pFloatArray, 10);
 
-    int pos = findFloat(linkedList, atof(argv[1]));
-    if (pos == -1)
-    {
-        printf("ERROR in FindFloat\nExitting Program\n");
-        exit(-1);
-    }
-
-    pushAfterPos(linkedList, pos, atof(argv[2]));
+    // Grab pointer to pos from function
+    Node *insertPos = findFloat(linkedList, atof(argv[1]));
+    pushAfterPos(insertPos, atof(argv[2]));
     
     printDoublyLinkedList(linkedList, 0);
 
     return 0;
 }
 
-// Build floatArray from command line input
-// Returns pointer to floatArray
-float *grabInput(char *argv[], int length, int pos)
-{
-    float *floatArray = (float *)malloc(length * sizeof(float));
-    for (int i = pos, j = 0; j < length; i++, j++)
-    {
-        floatArray[j] = atof(argv[i]);
-    }
-    return floatArray;
-}
-
+// Creates doubly linked list from floatArray
 Node *createNodes(float *floatArray, int length)
 {
     // Create Pointers
@@ -125,66 +111,44 @@ void printDoublyLinkedList(Node *linkedList, int reverse)
 }
 
 // Pushes new value to pos in linked list
-void pushAfterPos(Node *startOfList, int pos, float val)
+void pushAfterPos(Node *posInLoop, float val)
 {
-    Node *targetPos, *prevPos, *nextPos;
-    int curPos = 1;
-    /* Find target position in list using AND
-    Only runs if both of the following conditions is true:
-    1. Not at end of list
-    2. We have not reached the target position in the list yet
-    Stops if we reach the end of list or target pos, whichever happens first
-    */
-    for (targetPos = startOfList; targetPos != NULL && pos != curPos; targetPos = targetPos->next, curPos++)
-    {
-        prevPos = targetPos;
-    }
+    Node *nextPos;
 
     // Save the node that comes after this one
-    nextPos = targetPos->next;
+    nextPos = posInLoop->next;
 
     // Create new node
-    targetPos->next = (Node *)calloc(1, sizeof(Node));
-    targetPos = targetPos->next;
+    posInLoop->next = (Node *)calloc(1, sizeof(Node));
+    posInLoop = posInLoop->next;
     // Assign values to new Node
-    targetPos->value = val;
-    targetPos->prev = prevPos;
+    posInLoop->value = val;
 
-    // Link prior part of list to it
-    prevPos->next = targetPos;
-
-    // If there is a latter part of list
+    // If this is not end of list
     if (nextPos != NULL)
     {
         // Link latter part of list to it
-        nextPos->prev = targetPos;
-    } 
+        nextPos->prev = posInLoop;
+    }  else
+    {
+        nextPos = NULL;
+    }
     
-
+    // Assigns final attribute to the new node
+    posInLoop->next = nextPos;
 }
 
-// Finds a float value's position in the list and returns it if found
+// Finds a float value in the list and returns a pointer to it if found
 // If not found, returns 0
-int findFloat(Node *startOfList, float val)
+Node *findFloat(Node *startOfList, float val)
 {
-    Node *targetPos;
-    int found = 0, pos = 1;
     for (Node *cur = startOfList; cur != NULL; cur = cur->next)
     {
         if (cur->value == val)
         {
-            found = 1;
-            break;
+            return cur;
         }
-        pos++;
     }
 
-    if (found == 1)
-    {
-        return pos;
-    } else
-    {
-        return 0;
-    }
-    
+    return 0;
 }
